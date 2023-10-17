@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { components } from "@/api_types";
 type PostFeedbackRequest = components["schemas"]["PostFeedbackRequest"];
+type ProposeEditsRequest = components["schemas"]["ProposeEditsRequest"];
 
 export type Coord = {
   coords: {
@@ -21,6 +22,13 @@ export const useGlobalStore = defineStore({
         body: "",
         deletion_requested: false,
       } as Omit<PostFeedbackRequest, "privacy_checked" | "token">,
+    },
+    propose_edits: {
+      open: false,
+      data: {
+        edits: {},
+        additional_context: "",
+      } as Omit<ProposeEditsRequest, "privacy_checked" | "token">,
     },
   }),
   actions: {

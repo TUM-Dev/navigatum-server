@@ -11,6 +11,11 @@ core_js:
 feedback:
   cancel: Cancel
   category: Feedback category
+  coordinatepicker:
+    helptext:
+      enter_serveral: If you want to correct several coordinates at the same time, you can close this window and edit more coordinates.
+      saved_for_12h: We will save your changes locally for 12 hours.
+    title: Select coordinate
   delete: Delete this GitHub issue when resolved.
   error:
     feedback_not_configured: Sending feedback is currently not configured on the server.
@@ -55,6 +60,7 @@ feedback:
     response_at: You can see our response at
     thank_you: Thank you for giving your feedback. We will work on this as soon as possible.
     this_issue: this GitHub issue
+    this_pull_request: this GitHub pull request
     title: Thank you!
   title: Send Feedback
   type:

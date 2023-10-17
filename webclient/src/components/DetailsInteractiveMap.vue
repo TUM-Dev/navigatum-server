@@ -296,20 +296,6 @@ function setOverlayImage(imgUrl: string | null, coords: Coordinates | undefined)
   padding: 0 8px;
 }
 
-.toast.location-picker {
-  animation: fade-in 0.1s linear 0.05s;
-  animation-fill-mode: both;
-
-  & .btns {
-    margin: auto 0;
-  }
-
-  .toast {
-    // Mobile
-    margin-bottom: 9px;
-    font-size: 0.7rem;
-  }
-}
 /* --- Interactive map display --- */
 #interactive-map-container {
   margin-bottom: 10px;

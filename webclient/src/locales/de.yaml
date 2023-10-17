@@ -11,6 +11,11 @@ core_js:
 feedback:
   cancel: Abbrechen
   category: Feedback-Kategorie
+  coordinatepicker:
+    helptext:
+      enter_serveral: Falls du mehrere Koordinaten gleichzeitig korrigieren willst, kannst du dieses Fenster schließen und weitere Koordinaten editieren.
+      saved_for_12h: Wir speichern deine Veränderungen für 12 Stunden bei dir lokal.
+    title: Koordinate auswählen
   delete: Das zugehörige GitHub Issue löschen, sobald es gelöst wurde.
   error:
     feedback_not_configured: Das Senden von Feedback ist auf dem Server aktuell nicht konfiguriert.
@@ -55,6 +60,7 @@ feedback:
     response_at: Antwort auf dein Feedback findest du auf
     thank_you: Vielen Dank für dein Feedback! Wir werden es schnellstmöglich bearbeiten.
     this_issue: diesem GitHub Issue
+    this_pull_request: diesem GitHub Pull Request
     title: Vielen Dank!
   title: Feedback senden
   type:
@@ -173,7 +179,20 @@ view_view:
   meta:
     details_for: Details für
   msg:
+    coordinate-counter:
+      delete: Löschen
+      delete-confirm: Wirklich löschen?
+      info: Änderungen werden lokal \n für 12h gespeichert
+      msg-1: Aktuell
+      msg-2: ausstehende Koordinatenänderung|ausstehende Koordinatenänderungen
+      send: Senden
+    correct_location:
+      btn-cancel: Abbrechen
+      btn-done: Fertig
+      msg: Um die richtige Position zu setzen, ziehe den roten Marker über die Karte.
     inaccurate_only_building:
+      btn: Koordinate eintragen
+      help_others_and: Falls du sie herausfindest, kannst du die
       primary_msg: Die angezeigte Position zeigt nur die Position des Gebäude(teils). Die genaue Lage innerhalb des Gebäudes ist uns nicht bekannt.
     no_floor_overlay: Für den angezeigten Raum gibt es leider keine Indoor Karte.
   roomfinder_modal:
