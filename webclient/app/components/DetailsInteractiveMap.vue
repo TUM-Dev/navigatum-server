@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import type { BackgroundLayerSpecification, Coordinates, ImageSource } from "maplibre-gl";
+// @ts-expect-error library does not provide proper types
+import { addIndoorTo, IndoorControl, IndoorMap } from "map-gl-indoor";
 import { AttributionControl, FullscreenControl, GeolocateControl, Map, Marker, NavigationControl } from "maplibre-gl";
-import { FloorControl } from "~/composables/FloorControl";
 import { webglSupport } from "~/composables/webglSupport";
+// @ts-expect-error library does not provide proper types
+import type { MaplibreMapWithIndoor } from "map-gl-indoor";
 import type { components } from "~/api_types";
+import { indoorLayers } from "~/composables/indoorLayer";
 
 const props = defineProps<{ data: DetailsResponse }>();
-const map = ref<Map | undefined>(undefined);
+const map = ref<MaplibreMapWithIndoor | undefined>(undefined);
 const marker = ref<Marker | undefined>(undefined);
-const floorControl = ref<FloorControl>(new FloorControl());
 const { t } = useI18n({ useScope: "local" });
 const runtimeConfig = useRuntimeConfig();
 
@@ -16,29 +18,27 @@ const initialLoaded = ref(false);
 
 type DetailsResponse = components["schemas"]["DetailsResponse"];
 
-function loadInteractiveMap() {
+async function loadInteractiveMap() {
   if (!webglSupport) return;
 
-  const doMapUpdate = function () {
+  const doMapUpdate = async function () {
     // The map might or might not be initialized depending on the type
     // of navigation.
     if (document.getElementById("interactive-map")) {
       if (document.getElementById("interactive-map")?.classList.contains("maplibregl-map")) {
         marker.value?.remove();
       } else {
-        // @ts-expect-error recursive calls are not supported by ts
-        map.value = initMap("interactive-map");
+        map.value = await initMap("interactive-map");
 
         document.getElementById("interactive-map")?.classList.remove("loading");
       }
     }
+
+    // @ts-expect-error super weird typing error which TS can't resolve
     marker.value = new Marker({ element: createMarker() });
     const coords = props.data.coords;
-    if (map.value !== undefined) marker.value.setLngLat([coords.lon, coords.lat]).addTo(map.value as Map);
-
-    const overlays = props.data.maps?.overlays;
-    if (overlays) floorControl.value.updateFloors(overlays);
-    else floorControl.value.resetFloors();
+    if (map.value !== undefined)
+      marker.value.setLngLat([coords.lon, coords.lat]).addTo(map.value as MaplibreMapWithIndoor);
 
     const defaultZooms: { [index: string]: number | undefined } = {
       building: 17,
@@ -46,7 +46,7 @@ function loadInteractiveMap() {
     };
 
     map.value?.flyTo({
-      center: [coords.lon, coords.lat],
+      center: [8.3909479, 49.0332499],
       zoom: defaultZooms[props.data.type || "undefined"] || 16,
       speed: 1,
       maxDuration: 2000,
@@ -54,11 +54,11 @@ function loadInteractiveMap() {
   };
 
   // The map element should be visible when initializing
-  if (!document.querySelector("#interactive-map .maplibregl-canvas")) nextTick(doMapUpdate);
-  else doMapUpdate();
+  if (!document.querySelector("#interactive-map .maplibregl-canvas")) await nextTick(doMapUpdate);
+  else await doMapUpdate();
 }
 
-function createMarker(hueRotation = 0) {
+function createMarker(hueRotation = 0): HTMLDivElement {
   const markerDiv = document.createElement("div");
   const markerIcon = document.createElement("span");
   markerIcon.style.filter = `hue-rotate(${hueRotation}deg)`;
@@ -72,7 +72,7 @@ function createMarker(hueRotation = 0) {
   return markerDiv;
 }
 
-function initMap(containerId: string) {
+async function initMap(containerId: string) {
   const map = new Map({
     container: containerId,
 
@@ -93,7 +93,7 @@ function initMap(containerId: string) {
     zoom: 11, // Zoomed out so that the whole city is visible
 
     attributionControl: false,
-  });
+  }) as MaplibreMapWithIndoor;
 
   map.addControl(new NavigationControl({}), "top-left");
 
@@ -165,103 +165,18 @@ function initMap(containerId: string) {
     attrib._toggleAttribution();
   });
 
-  interface FloorChangedEvent {
-    file: string | null;
-    coords: Coordinates | undefined;
-  }
+  addIndoorTo(map);
 
-  floorControl.value.on("floor-changed", (args: FloorChangedEvent) => {
-    const url = args.file ? `${runtimeConfig.public.cdnURL}/cdn/maps/overlay/${args.file}` : null;
-    setOverlayImage(url, args.coords);
-  });
-  map.addControl(floorControl.value, "bottom-left");
+  // Retrieve the geojson from the path and add the map
+  const geojson = await (await fetch("/example.geojson")).json();
+  const indoorMap = IndoorMap.fromGeojson(geojson, { indoorLayers, showFeaturesWithEmptyLevel: true });
+  await map.indoor.addMap(indoorMap);
+
+  // Add the specific control
+  map.addControl(new IndoorControl(), "bottom-left");
 
   return map;
 }
-
-// Set the currently visible overlay image in the map,
-// or hide it if imgUrl is null.
-function setOverlayImage(imgUrl: string | null, coords: Coordinates | undefined) {
-  // Even if the map is initialized, it could be that
-  // it hasn't loaded yet, so we need to postpone adding
-  // the overlay layer.
-  // However, the official `loaded()` function is a problem
-  // here, because the map is shortly in a "loading" state
-  // when source / style is changed, even though the initial
-  // loading is complete (and only the initial loading seems
-  // to be required to do changes here)
-  if (!initialLoaded.value) {
-    map.value?.on("load", () => setOverlayImage(imgUrl, coords));
-    return;
-  }
-
-  if (imgUrl === null) {
-    // Hide overlay
-    if (map.value?.getLayer("overlay-layer")) map.value?.setLayoutProperty("overlay-layer", "visibility", "none");
-    if (map.value?.getLayer("overlay-bg")) map.value?.setLayoutProperty("overlay-bg", "visibility", "none");
-  } else {
-    const source = map.value?.getSource("overlay-src") as ImageSource | undefined;
-    if (source === undefined) {
-      if (coords !== undefined)
-        map.value?.addSource("overlay-src", {
-          type: "image",
-          url: imgUrl,
-          coordinates: coords,
-        });
-    } else
-      source.updateImage({
-        url: imgUrl,
-        coordinates: coords,
-      });
-
-    const layer = map.value?.getLayer("overlay-layer") as BackgroundLayerSpecification | undefined;
-    if (!layer) {
-      map.value?.addLayer({
-        id: "overlay-bg",
-        type: "background",
-        paint: {
-          "background-color": "#ffffff",
-          "background-opacity": 0.6,
-        },
-      });
-      map.value?.addLayer({
-        id: "overlay-layer",
-        type: "raster",
-        source: "overlay-src",
-        paint: {
-          "raster-fade-duration": 0,
-        },
-      });
-    } else {
-      map.value?.setLayoutProperty("overlay-layer", "visibility", "visible");
-      map.value?.setLayoutProperty("overlay-bg", "visibility", "visible");
-    }
-  }
-}
-
-// --- Loading components ---
-onMounted(() => {
-  nextTick(() => {
-    // Even though 'mounted' is called there is no guarantee apparently,
-    // that we can reference the map by ID in the DOM yet. For this reason we
-    // try to poll now (Not the best solution probably)
-    let timeoutInMs = 25;
-
-    function pollMap() {
-      const canLoadMap = document.getElementById("interactive-map") !== null;
-      if (canLoadMap) {
-        loadInteractiveMap();
-        window.scrollTo({ top: 0, behavior: "auto" });
-      } else {
-        console.info(`'mounted' called, but page is not mounted yet. Retrying map-load in ${timeoutInMs}ms`);
-        setTimeout(pollMap, timeoutInMs);
-        timeoutInMs *= 1.5;
-      }
-    }
-
-    pollMap();
-  });
-});
 </script>
 
 <template>
@@ -346,90 +261,31 @@ onMounted(() => {
   }
 }
 
-.maplibregl-ctrl-group.floor-ctrl {
-  max-width: 100%;
-  display: none;
-  overflow: hidden;
+/* mapboxgl is intentional due to map-gl-indoor */
+.maplibregl-ctrl-bottom-left .mapboxgl-ctrl {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  pointer-events: auto;
 
-  &.visible {
-    display: block;
-  }
+  &.mapboxgl-ctrl-group {
+    background: #fff;
+    border-radius: 4px;
 
-  &.closed #floor-list {
-    display: none !important;
-  }
-
-  & button {
-    &.active {
-      background: #ececec;
-    }
-
-    & .arrow {
-      font-weight: normal;
-      font-size: 0.3rem;
-      line-height: 0.9rem;
-      vertical-align: top;
+    button {
+      background-color: transparent;
+      border: 0;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: block;
+      height: 29px;
+      outline: none;
+      padding: 0;
+      width: 29px;
     }
   }
 
-  &.reduced > .vertical-oc,
-  &.reduced > .horizontal-oc {
-    display: none !important;
-  }
-
-  & > .vertical-oc,
-  & > .horizontal-oc {
-    font-weight: bold;
-    background: #ececec;
-  }
-
-  &.closed {
-    & > .vertical-oc,
-    & > .horizontal-oc {
-      background: #fff;
-    }
-
-    &:hover > .vertical-oc,
-    &:hover > .horizontal-oc {
-      background: #f2f2f2;
-    }
-  }
-
-  /* vertical is default layout */
-
-  & > .horizontal-oc {
-    display: none;
-  }
-
-  &.horizontal {
-    & > .horizontal-oc {
-      display: inline-block;
-    }
-
-    & > .vertical-oc {
-      display: none;
-    }
-
-    & #floor-list {
-      display: inline-block;
-      width: calc(100% - 29px);
-    }
-
-    & button {
-      display: inline-block;
-      border-top: 0;
-      border-left: 1px solid #ddd;
-
-      &.arrow {
-        font-size: 0.4rem;
-        vertical-align: bottom;
-        line-height: 1.1rem;
-      }
-
-      & + button {
-        border-top: 0;
-      }
-    }
+  .maplibregl-ctrl-group:not(:empty) {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   }
 }
 </style>
