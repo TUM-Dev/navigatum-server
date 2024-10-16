@@ -130,8 +130,8 @@ mod test {
     #[tokio::test]
     #[tracing_test::traced_test]
     async fn test_good_queries() {
-        let ms = MeiliSearchTestContainer::new().await;
-        crate::setup::meilisearch::load_data(&ms.client)
+        let ms = MeiliSearchTestContainer::new(true).await;
+        crate::setup::meilisearch::load_data(&ms.client, true)
             .await
             .unwrap();
         for query in TestQuery::load_good() {
@@ -155,8 +155,8 @@ mod test {
     #[tokio::test]
     #[tracing_test::traced_test]
     async fn test_bad_queries() {
-        let ms = MeiliSearchTestContainer::new().await;
-        crate::setup::meilisearch::load_data(&ms.client)
+        let ms = MeiliSearchTestContainer::new(true).await;
+        crate::setup::meilisearch::load_data(&ms.client, true)
             .await
             .unwrap();
         for query in TestQuery::load_bad() {

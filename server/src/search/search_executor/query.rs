@@ -1,12 +1,12 @@
+use crate::search::search_executor::parser::{Filter, ParsedQuery, TextToken};
+use crate::search::{Highlighting, Limits};
+use actix_web::dev::ResourcePath;
 use meilisearch_sdk::client::Client;
 use meilisearch_sdk::errors::Error;
 use meilisearch_sdk::indexes::Index;
 use meilisearch_sdk::search::{MultiSearchResponse, SearchQuery, Selectors};
 use serde::Deserialize;
 use std::fmt::{Debug, Formatter};
-
-use crate::search::search_executor::parser::{Filter, ParsedQuery, TextToken};
-use crate::search::{Highlighting, Limits};
 
 #[derive(Deserialize, Default, Clone)]
 #[allow(dead_code)]
@@ -178,11 +178,20 @@ impl GeoEntryQuery {
         &'b self,
         entries: &'a Index,
     ) -> SearchQuery<'a, meilisearch_sdk::DefaultHttpClient> {
+        let semantic_ratio = match std::env::var("MEILI_HYBRID_RATIO").ok() {
+            None => None,
+            Some(s) if s.trim().is_empty() => None,
+            Some(s) => Some(s),
+        }
+        .unwrap_or("0.1".into())
+        .parse()
+        .unwrap_or(0.1);
         SearchQuery::new(entries)
             .with_facets(Selectors::Some(&["facet"]))
             .with_highlight_pre_tag(&self.highlighting.pre)
             .with_highlight_post_tag(&self.highlighting.post)
             .with_attributes_to_highlight(Selectors::Some(&["name"]))
+            .with_hybrid("default", semantic_ratio)
             .build()
     }
 
@@ -207,10 +216,19 @@ impl GeoEntryQuery {
         entries: &'a Index,
         query: &'a str,
     ) -> SearchQuery<'a, meilisearch_sdk::DefaultHttpClient> {
+        let semantic_ratio = match std::env::var("MEILI_HYBRID_RATIO").ok() {
+            None => None,
+            Some(s) if s.trim().is_empty() => None,
+            Some(s) => Some(s),
+        }
+        .unwrap_or("0.1".into())
+        .parse()
+        .unwrap_or(0.1);
         self.common_query(entries)
             .with_query(query)
             .with_limit(2 * self.limits.buildings_count) // we might do reordering later
             .with_filter(&self.filters.buildings)
+            .with_hybrid("default", semantic_ratio)
             .build()
     }
 

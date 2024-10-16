@@ -151,8 +151,8 @@ async fn run_maintenance_work(
         let ms_url =
             std::env::var("MIELI_URL").unwrap_or_else(|_| "http://localhost:7700".to_string());
         let client = Client::new(ms_url, std::env::var("MEILI_MASTER_KEY").ok()).unwrap();
-        setup::meilisearch::setup(&client).await.unwrap();
-        setup::meilisearch::load_data(&client).await.unwrap();
+        setup::meilisearch::setup(&client, true).await.unwrap();
+        setup::meilisearch::load_data(&client, true).await.unwrap();
     } else {
         info!("skipping the database setup as SKIP_MS_SETUP=true");
         initialisation_started.wait().await;

@@ -40,7 +40,7 @@ pub struct MeiliSearchTestContainer {
 
 impl MeiliSearchTestContainer {
     /// Create a meilisearch instance for testing against
-    pub async fn new() -> Self {
+    pub async fn new(vector_search: bool) -> Self {
         let container = meilisearch::Meilisearch::default()
             .with_tag("v1.9.0")
             .start()
@@ -53,7 +53,9 @@ impl MeiliSearchTestContainer {
         );
 
         let client = Client::new(meili_url.clone(), None::<String>).unwrap();
-        super::meilisearch::setup(&client).await.unwrap();
+        super::meilisearch::setup(&client, vector_search)
+            .await
+            .unwrap();
         Self {
             _container: container,
             client,
@@ -80,8 +82,8 @@ async fn test_db_setup() {
 #[tokio::test]
 #[tracing_test::traced_test]
 async fn test_meilisearch_setup() {
-    let ms = MeiliSearchTestContainer::new().await;
-    crate::setup::meilisearch::load_data(&ms.client)
+    let ms = MeiliSearchTestContainer::new(false).await;
+    crate::setup::meilisearch::load_data(&ms.client, false)
         .await
         .unwrap();
 }

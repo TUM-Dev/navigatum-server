@@ -147,6 +147,8 @@ services:
       CONNECTUM_OAUTH_CLIENT_SECRET: ${CONNECTUM_OAUTH_CLIENT_SECRET}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
       JWT_KEY: ${JWT_KEY}
+      MEILI_OLLAMA_URL: ${MEILI_OLLAMA_URL}
+      MEILI_HYBRID_RATIO: ${MEILI_HYBRID_RATIO}
     depends_on:
       meilisearch:
         condition: service_healthy
