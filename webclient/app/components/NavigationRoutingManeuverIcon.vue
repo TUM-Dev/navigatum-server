@@ -27,7 +27,7 @@ defineProps<{ type: ManeuverTypeResponse }>();
 </script>
 
 <template>
-  <div class="text-zinc-900 min-w-11 rounded-full p-2">
+  <div class="min-w-11 rounded-full p-2 text-zinc-900">
     <ArrowLeftEndOnRectangleIcon v-if="type === 'building_exit' || type === 'exit_left'" class="mx-auto h-7 w-7" />
     <ArrowLeftEndOnRectangleIcon v-else-if="type === 'exit_right'" class="mx-auto h-7 w-7 scale-x-[-1]" />
     <ArrowLeftStartOnRectangleIcon v-else-if="type === 'building_enter'" class="mx-auto h-7 w-7" />

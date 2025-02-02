@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{ items: Item[]; class?: string }>(), { c
           :to="item.to"
           property="item"
           typeof="WebPage"
-          class="focusable rounded-sm hover:underline"
+          class="focusable rounded-xs hover:underline"
           :class="{
             'visited:text-blue-500': i > 0,
             'visited:text-zinc-500': i === 0,

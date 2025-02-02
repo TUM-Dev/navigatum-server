@@ -17,11 +17,11 @@ defineProps<{ item: ResultEntryItem }>();
 
 <template>
   <div class="my-auto min-w-9 md:min-w-11">
-    <div v-if="item.type === 'room' || item.type === 'virtual_room' || item.type === 'poi'" class="text-zinc-900 p-2">
+    <div v-if="item.type === 'room' || item.type === 'virtual_room' || item.type === 'poi'" class="p-2 text-zinc-900">
       <MagnifyingGlassIcon v-if="item.parsed_id" class="h-5 w-5 md:h-6 md:w-6" />
       <MapPinIcon v-else class="h-5 w-5 md:h-6 md:w-6" />
     </div>
-    <div v-else class="text-white bg-blue-500 rounded-full p-2">
+    <div v-else class="rounded-full bg-blue-500 p-2 text-white">
       <BuildingOfficeIcon v-if="item.type === 'building'" class="mx-auto h-5 w-5 md:h-6 md:w-6" />
       <BuildingOffice2Icon v-else class="mx-auto h-5 w-5 md:h-6 md:w-6" />
     </div>

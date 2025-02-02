@@ -293,9 +293,9 @@ onMounted(() => {
 <template>
   <div
     id="interactive-legacy-map-container"
-    class="mb-2.5 aspect-4/3 print:!hidden"
+    class="aspect-[4 / 3] mb-2.5 print:!hidden"
     :class="{
-      'dark:bg-black bg-white border-zinc-300 border': webglSupport,
+      'border border-zinc-300 bg-white dark:bg-black': webglSupport,
       'bg-red-300 text-red-950': !webglSupport,
     }"
   >
@@ -304,7 +304,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "../assets/main.css";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
 /* --- Interactive map display --- */

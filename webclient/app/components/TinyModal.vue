@@ -25,7 +25,7 @@ const modalOpen = ref(false);
   <div v-if="showPopoverInstead" class="popover">
     <slot name="icon" />
     <div class="popover-container">
-      <div class="rounded shadow">
+      <div class="rounded-sm shadow">
         <div v-if="props.content.title" class="card-header">
           {{ props.content.title }}
         </div>

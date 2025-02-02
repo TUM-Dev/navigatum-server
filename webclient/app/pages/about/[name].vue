@@ -11,18 +11,19 @@ const { data: page } = await useAsyncData(route.path, () => {
   </div>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "../../assets/main.css";
 #contentwrapper {
   h1 {
-    @apply text-zinc-900 pb-3 pt-4 text-3xl font-medium;
+    @apply pt-4 pb-3 text-3xl font-medium text-zinc-900;
   }
 
   h2 {
-    @apply text-zinc-900 pb-2 pt-3 text-2xl font-medium;
+    @apply pt-3 pb-2 text-2xl font-medium text-zinc-900;
   }
 
   h3 {
-    @apply text-zinc-800 pb-1 pt-2 text-lg font-medium;
+    @apply pt-2 pb-1 text-lg font-medium text-zinc-800;
   }
 
   p,
@@ -34,7 +35,11 @@ const { data: page } = await useAsyncData(route.path, () => {
   h4,
   h5,
   h6 {
+<<<<<<< HEAD
     @apply text-zinc-700 py-1 text-sm font-semibold uppercase leading-6;
+=======
+    @apply py-1 text-sm leading-6 font-medium text-zinc-700;
+>>>>>>> 73d37b89 (intial migration to tailwind)
   }
 
   li {
@@ -42,14 +47,18 @@ const { data: page } = await useAsyncData(route.path, () => {
   }
 
   code {
+<<<<<<< HEAD
     @apply text-blue-900 bg-blue-100 mb-4 flex max-w-full flex-col items-start space-x-4 overflow-auto rounded-md px-4 py-3 text-left font-mono text-xs text-blue-950 dark:bg-blue-50;
   }
   code span {
     @apply !ms-0;
+=======
+    @apply mb-4 inline-flex max-w-full items-center space-x-4 overflow-auto rounded-md bg-blue-100 px-4 py-3 text-left font-mono text-xs text-blue-900 text-blue-950 dark:bg-blue-50;
+>>>>>>> 73d37b89 (intial migration to tailwind)
   }
 
   p a {
-    @apply text-blue-600 gap-1 rounded bg-transparent visited:text-blue-600 hover:underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus-visible:outline-0;
+    @apply gap-1 rounded-sm bg-transparent text-blue-600 visited:text-blue-600 hover:underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus-visible:outline-0;
   }
 }
 </style>

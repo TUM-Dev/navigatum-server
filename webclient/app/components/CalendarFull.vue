@@ -169,6 +169,8 @@ function refetchEvents() {
 </template>
 
 <style lang="postcss">
+@reference "../assets/main.css";
+
 .fc-event-main {
   @apply flex;
 }

@@ -9,12 +9,12 @@ const feedback = useFeedback();
 <template>
   <TokenBasedModal :data="feedback.data">
     <template #modal>
-      <label class="text-zinc-600 text-sm font-semibold" for="feedback-subject"> {{ t("subject") }}</label>
-      <div class="text-zinc-600 flex flex-row gap-2 pb-3">
+      <label class="text-sm font-semibold text-zinc-600" for="feedback-subject"> {{ t("subject") }}</label>
+      <div class="flex flex-row gap-2 pb-3 text-zinc-600">
         <select
           id="feedback-category"
           v-model="feedback.data.category"
-          class="focusable bg-zinc-200 border-zinc-400 rounded border px-2 py-1"
+          class="focusable rounded-sm border border-zinc-400 bg-zinc-200 px-2 py-1"
           :aria-label="t('category')"
         >
           <option value="general">{{ t("type.general") }}</option>
@@ -27,24 +27,24 @@ const feedback = useFeedback();
         <input
           id="feedback-subject"
           v-model="feedback.data.subject"
-          class="focusable bg-zinc-200 border-zinc-400 flex-grow rounded border px-2 py-1"
+          class="focusable grow rounded-sm border border-zinc-400 bg-zinc-200 px-2 py-1"
           type="text"
           :placeholder="t('subject')"
         />
       </div>
 
       <div class="flex flex-col pb-5">
-        <label class="text-zinc-600 text-sm font-semibold" for="feedback-body">
+        <label class="text-sm font-semibold text-zinc-600" for="feedback-body">
           {{ t("message") }}
         </label>
         <textarea
           id="feedback-body"
           v-model="feedback.data.body"
-          class="focusable bg-zinc-200 border-zinc-400 resize-y rounded border px-2 py-1"
+          class="focusable resize-y rounded-sm border border-zinc-400 bg-zinc-200 px-2 py-1"
           :placeholder="t('message')"
           rows="6"
         />
-        <p class="text-zinc-500 text-xs">{{ t("helptext." + feedback.data.category) }}</p>
+        <p class="text-xs text-zinc-500">{{ t("helptext." + feedback.data.category) }}</p>
       </div>
 
       <Checkbox id="delete-issue" v-model="deleteIssueRequested">{{ t("delete") }}</Checkbox>

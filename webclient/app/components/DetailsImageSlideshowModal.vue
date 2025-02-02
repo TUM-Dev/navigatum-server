@@ -57,7 +57,7 @@ const subtitles = computed<SubTitle[]>(() => {
               itemprop="contentUrl"
               :alt="t('image_alt')"
               :src="`${runtimeConfig.public.cdnURL}/cdn/lg/${img.name}`"
-              class="max-h-2/3 w-full rounded sm:max-h-[30rem]"
+              class="max-h-2/3 w-full rounded-sm sm:max-h-[30rem]"
             />
             <span v-if="img.license.url" class="hidden" itemprop="license"> {{ img.license.url }}</span>
             <span v-else class="hidden" itemprop="license"> img.license.text</span>
@@ -85,10 +85,10 @@ const subtitles = computed<SubTitle[]>(() => {
             'col-span-5 md:col-span-3': i % 3 === 1,
           }"
         >
-          <h6 class="text-zinc-600 text-sm font-semibold">
+          <h6 class="text-sm font-semibold text-zinc-600">
             {{ sub.title }}
           </h6>
-          <div class="wrap- text-zinc-600 text-sm" :class="[i % 3 == 1 ? 'text-xs' : '']">
+          <div class="wrap- text-sm text-zinc-600" :class="[i % 3 == 1 ? 'text-xs' : '']">
             <Btn v-if="sub.url" variant="link" size="-ps-1 !inline" :to="sub.url">
               {{ sub.text }}
             </Btn>

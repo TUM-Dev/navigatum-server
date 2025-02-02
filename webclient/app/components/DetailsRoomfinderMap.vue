@@ -32,11 +32,11 @@ const selectedMap = computed<RoomfinderMapEntryResponse>(() => {
       <Listbox v-model="selected_index">
         <div class="relative mt-1">
           <ListboxButton
-            class="focusable text-zinc-900 bg-zinc-100 relative w-full cursor-pointer rounded-lg py-2 pl-3 pr-10 text-left shadow-md sm:text-sm"
+            class="focusable relative w-full cursor-pointer rounded-lg bg-zinc-100 py-2 pr-10 pl-3 text-left text-zinc-900 shadow-md sm:text-sm"
           >
             <span class="block truncate">1:{{ selectedMap.scale }}, {{ selectedMap.name }}</span>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronUpDownIcon class="text-zinc-400 h-5 w-5" />
+              <ChevronUpDownIcon class="h-5 w-5 text-zinc-400" />
             </span>
           </ListboxButton>
 
@@ -46,7 +46,7 @@ const selectedMap = computed<RoomfinderMapEntryResponse>(() => {
             leave-to-class="opacity-0"
           >
             <ListboxOptions
-              class="ring-black/5 text-zinc-900 bg-zinc-100 absolute mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 focus:outline-none sm:text-sm"
+              class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-zinc-100 py-1 text-base text-zinc-900 ring-1 shadow-lg ring-black/5 focus:outline-hidden sm:text-sm"
             >
               <ListboxOption
                 v-for="(map, i) in available"
@@ -56,13 +56,13 @@ const selectedMap = computed<RoomfinderMapEntryResponse>(() => {
                 as="template"
               >
                 <li
-                  class="relative cursor-pointer select-none py-2 pl-10 pr-4"
-                  :class="[active ? 'text-blue-900 bg-blue-100' : 'text-zinc-900']"
+                  class="relative cursor-pointer py-2 pr-4 pl-10 select-none"
+                  :class="[active ? 'bg-blue-100 text-blue-900' : 'text-zinc-900']"
                 >
                   <span class="block truncate" :class="[selected ? 'font-medium' : 'font-normal']">
                     1:{{ map.scale }}, {{ map.name }}
                   </span>
-                  <span v-if="selected" class="text-blue-600 absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
                     <CheckIcon class="h-5 w-5" />
                   </span>
                 </li>

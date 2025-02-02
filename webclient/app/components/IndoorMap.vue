@@ -264,7 +264,7 @@ defineExpose({ drawRoute, fitBounds });
     id="interactive-indoor-map-container"
     class="!h-full min-h-96 print:!hidden"
     :class="{
-      'dark:bg-black bg-white border-zinc-300 border': webglSupport,
+      'border border-zinc-300 bg-white dark:bg-black': webglSupport,
       'bg-red-300 text-red-950': !webglSupport,
     }"
   >
@@ -273,7 +273,8 @@ defineExpose({ drawRoute, fitBounds });
   </div>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "../assets/main.css";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
 /* --- Interactive map display --- */

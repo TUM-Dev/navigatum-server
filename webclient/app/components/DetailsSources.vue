@@ -16,8 +16,8 @@ const { t } = useI18n({ useScope: "local" });
 
 <template>
   <section class="px-5">
-    <h2 class="text-md text-zinc-800 font-semibold">{{ t("title") }}</h2>
-    <div class="text-zinc-600 text-sm">
+    <h2 class="text-md font-semibold text-zinc-800">{{ t("title") }}</h2>
+    <div class="text-sm text-zinc-600">
       <p>
         {{ t("base.title") }}:
         <span v-for="(e, i) in sources.base" :key="e.name">

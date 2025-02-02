@@ -135,7 +135,7 @@ useSeoMeta({
             to: i > 0 ? '/view/' + data?.parents[i] : '/',
           }))
         "
-        class="pb-3 pt-6"
+        class="pt-6 pb-3"
       />
       <div class="group flex flex-row gap-2">
         <button
@@ -143,26 +143,26 @@ useSeoMeta({
           :title="t('header.copy_link')"
           type="button"
           tabindex="1"
-          class="-ms-8 hidden px-1 text-transparent transition-colors focus:text-zinc-800 group-hover:text-zinc-800 lg:block"
+          class="-ms-8 hidden px-1 text-transparent transition-colors group-hover:text-zinc-800 focus:text-zinc-800 lg:block"
           @click="copy(`https://nav.tum.de${route.fullPath}`)"
         >
           <ClipboardDocumentCheckIcon v-if="copied" class="h-4 w-4" />
           <LinkIcon v-else class="h-4 w-4" />
         </button>
-        <h1 class="text-zinc-700 text-xl font-bold">{{ data.name }}</h1>
+        <h1 class="text-xl font-bold text-zinc-700">{{ data.name }}</h1>
       </div>
       <div>
         <div class="flex grow place-items-center justify-between">
-          <span class="text-zinc-500 mt-0.5 text-sm">{{ data.type_common_name }}</span>
+          <span class="mt-0.5 text-sm text-zinc-500">{{ data.type_common_name }}</span>
           <div class="flex flex-row place-items-center gap-3">
             <button
               v-if="data.props?.calendar_url"
               type="button"
-              class="focusable rounded-sm"
+              class="focusable rounded-xs"
               :title="t('header.calendar')"
               @click="calendar = [...new Set([...calendar, route.params.id?.toString() ?? '404'])]"
             >
-              <CalendarDaysIcon class="text-blue-600 mt-0.5 h-4 w-4" />
+              <CalendarDaysIcon class="mt-0.5 h-4 w-4 text-blue-600" />
             </button>
             <ShareButton :coords="data.coords" :name="data.name" />
             <DetailsFeedbackButton />
@@ -215,15 +215,15 @@ useSeoMeta({
             </ClientOnly>
           </TabPanel>
         </TabPanels>
-        <TabList class="bg-zinc-100 flex space-x-1 rounded-md p-1 print:!hidden">
+        <TabList class="flex space-x-1 rounded-md bg-zinc-100 p-1 print:!hidden">
           <Tab :tab-index="0" as="template" @click="selectedMap = 'interactive'">
             <button
               type="button"
-              class="focusable w-full rounded-md py-2.5 text-sm font-medium leading-5"
+              class="focusable w-full rounded-md py-2.5 text-sm leading-5 font-medium"
               :class="[
                 selectedMap === 'interactive'
-                  ? 'text-zinc-900 bg-zinc-300 shadow'
-                  : 'text-zinc-800 bg-zinc-300/5 hover:text-zinc-900 hover:bg-zinc-500/20',
+                  ? 'bg-zinc-300 text-zinc-900 shadow'
+                  : 'bg-zinc-300/5 text-zinc-800 hover:bg-zinc-500/20 hover:text-zinc-900',
               ]"
             >
               {{ t("map.interactive") }}
@@ -232,12 +232,12 @@ useSeoMeta({
           <Tab :tab-index="1" as="template" :disabled="!data.maps.roomfinder?.available" @click="selectedMap = 'plans'">
             <button
               type="button"
-              class="focusable w-full rounded-md py-2.5 text-sm font-medium leading-5"
+              class="focusable w-full rounded-md py-2.5 text-sm leading-5 font-medium"
               :class="{
-                'text-zinc-900 bg-zinc-300 shadow': selectedMap === 'plans',
-                'text-zinc-800 bg-zinc-300/5': selectedMap !== 'plans',
-                'hover:text-zinc-900 hover:bg-zinc-500/20': data.maps.roomfinder?.available,
-                '!text-zinc-400 cursor-not-allowed': !data.maps.roomfinder?.available,
+                'bg-zinc-300 text-zinc-900 shadow': selectedMap === 'plans',
+                'bg-zinc-300/5 text-zinc-800': selectedMap !== 'plans',
+                'hover:bg-zinc-500/20 hover:text-zinc-900': data.maps.roomfinder?.available,
+                'cursor-not-allowed !text-zinc-400': !data.maps.roomfinder?.available,
               }"
             >
               {{ t("map.plans") }}
@@ -260,7 +260,7 @@ useSeoMeta({
       :image="data.imgs?.length ? data.imgs[0] : undefined"
     />
   </div>
-  <div v-else class="text-zinc-900 flex flex-col items-center gap-5 py-32">
+  <div v-else class="flex flex-col items-center gap-5 py-32 text-zinc-900">
     <Spinner class="h-8 w-8" />
     {{ t("Loading data...") }}
   </div>

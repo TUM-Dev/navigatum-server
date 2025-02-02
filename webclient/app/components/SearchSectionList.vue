@@ -16,11 +16,11 @@ const route = useRoute();
 <template>
   <div v-for="s in data.sections" :key="s.facet">
     <section class="flex flex-col gap-2">
-      <h2 class="text-md text-zinc-500 font-semibold">{{ t(`sections.${s.facet}`) }}</h2>
+      <h2 class="text-md font-semibold text-zinc-500">{{ t(`sections.${s.facet}`) }}</h2>
       <ul v-for="(e, i) in s.entries" :key="e.id" class="flex flex-col gap-3">
         <SearchResultItemLink v-if="i < s.n_visible" :highlighted="false" :item="e" />
       </ul>
-      <p v-if="s.estimatedTotalHits > 10" class="text-zinc-500 text-sm">
+      <p v-if="s.estimatedTotalHits > 10" class="text-sm text-zinc-500">
         {{ t("approx_results", s.estimatedTotalHits) }}
         <NuxtLinkLocale
           :to="
@@ -28,11 +28,11 @@ const route = useRoute();
               ? `/search?q=${route.query.q}&limit_buildings=${queryLimitBuildings}&limit_rooms=${queryLimitRooms + 50}`
               : `/search?q=${route.query.q}&limit_buildings=${queryLimitBuildings + 20}&limit_rooms=${queryLimitRooms}`
           "
-          class="focusable text-blue-500 rounded-sm visited:text-blue-500 hover:text-blue-600 hover:underline"
+          class="focusable rounded-xs text-blue-500 visited:text-blue-500 hover:text-blue-600 hover:underline"
           >{{ t("view_more") }}
         </NuxtLinkLocale>
       </p>
-      <p v-else class="text-zinc-500 text-sm">
+      <p v-else class="text-sm text-zinc-500">
         {{ t("results", s.estimatedTotalHits) }}
       </p>
     </section>

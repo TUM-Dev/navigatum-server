@@ -13,12 +13,12 @@ const props = withDefaults(
   <div
     v-bind="{ id }"
     :data-cy="'toast-' + props.level"
-    class="text-pretty rounded border p-1.5 text-sm leading-5"
+    class="rounded-sm border p-1.5 text-sm leading-5 text-pretty"
     :class="{
-      'text-red-900 bg-red-100 border-red-300': props.level === 'error',
-      'text-orange-900 bg-orange-100 border-orange-300': props.level === 'warning',
-      'text-blue-900 bg-blue-100 border-blue-300': props.level === 'info',
-      'text-zinc-900 bg-zinc-100 border-zinc-300': props.level === 'default',
+      'border-red-300 bg-red-100 text-red-900': props.level === 'error',
+      'border-orange-300 bg-orange-100 text-orange-900': props.level === 'warning',
+      'border-blue-300 bg-blue-100 text-blue-900': props.level === 'info',
+      'border-zinc-300 bg-zinc-100 text-zinc-900': props.level === 'default',
     }"
   >
     <slot>{{ props.msg }}</slot>
