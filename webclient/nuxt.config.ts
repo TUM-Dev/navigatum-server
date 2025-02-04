@@ -103,10 +103,6 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  css: ["~/assets/main.scss"],
-  vite: {
-    plugins: [tailwindcss()],
-  },
   devtools: { enabled: true },
   colorMode: {
     classSuffix: "",
