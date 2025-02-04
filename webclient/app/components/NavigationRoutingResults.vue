@@ -32,11 +32,7 @@ const { t } = useI18n({ useScope: "local" });
         @click="emit('selectManeuver', { begin_shape_index: m.begin_shape_index, end_shape_index: m.end_shape_index })"
       >
         <div
-<<<<<<< HEAD
-          class="bg-zinc-200 flex flex-row items-center gap-3 overflow-auto rounded-md p-2 py-1 group-hover:bg-zinc-300"
-=======
           class="flex flex-row items-center gap-3 rounded-md bg-zinc-200 p-2 py-1 group-hover:bg-zinc-300"
->>>>>>> 73d37b89 (intial migration to tailwind)
           :aria-label="m.verbal_transition_alert_instruction ?? undefined"
         >
           <NavigationRoutingManeuverIcon :type="m.type" />
