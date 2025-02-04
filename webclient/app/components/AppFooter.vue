@@ -59,7 +59,7 @@ const navigation = computed(() => [
       </nav>
       <div class="mt-10 flex justify-center space-x-10 text-center">
         <Btn to="https://tum.de" variant="rounded-xl pt-2 pb-4 px-4 focusable" size="sm">
-          <p class="text-zinc-600 text-center text-xs">
+          <p class="text-center text-xs text-zinc-600">
             {{ t("official_roomfinder") }}<br />
             <img
               :alt="t('tum_logo_alt')"

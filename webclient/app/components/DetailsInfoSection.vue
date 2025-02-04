@@ -17,7 +17,7 @@ const runtimeConfig = useRuntimeConfig();
 <template>
   <!-- Information section (on mobile) -->
   <div v-if="data.props?.computed" class="col-5 col-sm-12 column mt-4 block lg:hidden">
-    <h2 class="text-zinc-800 pb-3 text-lg font-semibold">
+    <h2 class="pb-3 text-lg font-semibold text-zinc-800">
       {{ t("info_title") }}
     </h2>
     <DetailsPropertyTable
@@ -32,7 +32,7 @@ const runtimeConfig = useRuntimeConfig();
   <!-- Some elements are currently duplicate, which is not optimal but should be okay
        as long as only little information is there -->
   <div class="hidden lg:block">
-    <div class="bg-white border-zinc-200 max-w-sm rounded-lg border shadow-md shadow-zinc-500/5 dark:bg-zinc-100">
+    <div class="max-w-sm rounded-lg border border-zinc-200 bg-white shadow-md shadow-zinc-500/5 dark:bg-zinc-100">
       <button
         v-if="data.imgs?.length && data.imgs[0]"
         type="button"
@@ -42,7 +42,7 @@ const runtimeConfig = useRuntimeConfig();
         <NuxtImg
           :alt="t('image_alt')"
           :src="`${runtimeConfig.public.cdnURL}/cdn/lg/${data.imgs[0].name}`"
-          class="bg-zinc-100 block h-auto w-full max-w-full rounded-t-lg"
+          class="block h-auto w-full max-w-full rounded-t-lg bg-zinc-100"
           preload
           placeholder
           sizes="500px sm:200px md:300px md:400px"

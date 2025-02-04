@@ -54,7 +54,7 @@ const sizeClasses = computed(() => {
     case "sm":
       return "text-xs font-semibold px-1.5 rounded-md";
     case "md":
-      return "text-md px-4 py-1.5 rounded-sm";
+      return "text-md px-4 py-1.5 rounded-xs";
     case "lg":
       return "text-lg px-2.5 rounded-md";
     default:

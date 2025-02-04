@@ -51,23 +51,23 @@ function close() {
     >
       <div
         v-if="isOpen"
-        class="fixed inset-0 z-50 flex h-screen w-full items-center justify-center backdrop-blur-sm backdrop-brightness-95"
+        class="fixed inset-0 z-50 flex h-screen w-full items-center justify-center backdrop-blur-xs backdrop-brightness-95"
         @click.self="close"
       >
         <div class="relative flex max-h-screen w-full max-w-2xl flex-col rounded-md shadow-2xl" :class="props.class">
-          <div class="bg-zinc-200 flex w-full flex-row justify-between rounded-t-md p-5">
-            <h2 v-if="props.title" class="text-zinc-800 text-lg font-semibold">{{ props.title }}</h2>
+          <div class="flex w-full flex-row justify-between rounded-t-md bg-zinc-200 p-5">
+            <h2 v-if="props.title" class="text-lg font-semibold text-zinc-800">{{ props.title }}</h2>
             <button
               v-if="!props.disableClose"
               type="button"
               :aria-label="t('close')"
-              class="focusable text-zinc-800 mx-4 my-2 text-xl"
+              class="focusable mx-4 my-2 text-xl text-zinc-800"
               @click.prevent="close"
             >
               <XMarkIcon class="h-4 w-4" />
             </button>
           </div>
-          <div class="bg-white text-zinc-600 max-h-screen w-full overflow-auto rounded-b-md p-6 dark:bg-zinc-100">
+          <div class="max-h-screen w-full overflow-auto rounded-b-md bg-white p-6 text-zinc-600 dark:bg-zinc-100">
             <slot />
           </div>
         </div>

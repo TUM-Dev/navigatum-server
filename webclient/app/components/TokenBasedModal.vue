@@ -180,8 +180,8 @@ function sendForm() {
         variant="primary"
         size="md"
         :class="{
-          '!text-blue-900 !bg-blue-200 cursor-progress': loading,
-          '!text-blue-50 !bg-blue-300 cursor-not-allowed': error.blockSend,
+          'cursor-progress !bg-blue-200 !text-blue-900': loading,
+          'cursor-not-allowed !bg-blue-300 !text-blue-50': error.blockSend,
         }"
         v-bind="{ disabled: loading || error.blockSend }"
         @click="sendForm"

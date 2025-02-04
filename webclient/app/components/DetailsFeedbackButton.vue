@@ -10,7 +10,7 @@ const { t } = useI18n({ useScope: "local" });
 <template>
   <button
     type="button"
-    class="focusable rounded-sm"
+    class="focusable rounded-xs"
     :title="t('feedback')"
     data-cy="open-feedback-details"
     @click="
@@ -25,7 +25,7 @@ const { t } = useI18n({ useScope: "local" });
       }
     "
   >
-    <FlagIcon class="text-blue-600 h-4 w-4 hover:text-blue-900" />
+    <FlagIcon class="h-4 w-4 text-blue-600 hover:text-blue-900" />
   </button>
 </template>
 

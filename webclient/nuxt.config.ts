@@ -1,3 +1,5 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-10-29",
@@ -11,15 +13,7 @@ export default defineNuxtConfig({
       feedbackURL: "https://nav.tum.de",
     },
   },
-  modules: [
-    "@nuxt/eslint",
-    "@nuxtjs/i18n",
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
-    "@vueuse/nuxt",
-    "@nuxt/content",
-    "@nuxt/image",
-  ],
+  modules: ["@nuxt/eslint", "@nuxtjs/i18n", "@nuxtjs/color-mode", "@vueuse/nuxt", "@nuxt/content", "@nuxt/image"],
   app: {
     head: {
       bodyAttrs: { class: "bg-zinc-50" },
@@ -105,14 +99,11 @@ export default defineNuxtConfig({
       redirectOn: "root", // only redirect if somebody visits / to have better SEO
     },
   },
-  devtools: { enabled: true },
-  postcss: {
-    plugins: {
-      "tailwindcss/nesting": {},
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  css: ["~/assets/main.scss"],
+  vite: {
+    plugins: [tailwindcss()],
   },
+  devtools: { enabled: true },
   colorMode: {
     classSuffix: "",
     storageKey: "theme",

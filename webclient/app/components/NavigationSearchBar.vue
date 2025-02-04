@@ -123,7 +123,7 @@ const { data, error } = await useFetch<SearchResponse>(url, {
 
 <template>
   <div
-    class="bg-zinc-200 border-zinc-400 flex flex-grow flex-row rounded-s-sm border focus-within:outline focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-blue-600"
+    class="flex grow flex-row rounded-s-sm border border-zinc-400 bg-zinc-200 focus-within:outline focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-blue-600"
   >
     <textarea
       :id="queryId"
@@ -139,7 +139,7 @@ const { data, error } = await useFetch<SearchResponse>(url, {
       maxlength="2048"
       :name="queryId"
       type="text"
-      class="text-zinc-800 flex-grow resize-none bg-transparent py-2.5 pe-5 ps-3 text-sm font-semibold placeholder:text-zinc-800 focus-within:placeholder:text-zinc-500 placeholder:font-normal focus:outline-0"
+      class="grow resize-none bg-transparent py-2.5 ps-3 pe-5 text-sm font-semibold text-zinc-800 placeholder:font-normal placeholder:text-zinc-800 focus-within:placeholder:text-zinc-500 focus:outline-0"
       :placeholder="t('input.placeholder-' + queryId)"
       :aria-label="t('input.aria-searchlabel')"
       @focus="
@@ -154,14 +154,14 @@ const { data, error } = await useFetch<SearchResponse>(url, {
   <ClientOnly>
     <div
       v-if="currently_actively_picking && data && query.length !== 0"
-      class="shadow-4xl bg-zinc-50 border-zinc-200 absolute top-3 z-30 -ms-4 mt-56 flex max-h-[calc(100vh-80px)] min-w-96 max-w-sm flex-col gap-4 overflow-auto rounded border p-3.5 shadow-zinc-700/30 md:me-3"
+      class="shadow-4xl absolute top-3 z-30 -ms-4 mt-56 flex max-h-[calc(100vh-80px)] max-w-sm min-w-96 flex-col gap-4 overflow-auto rounded-sm border border-zinc-200 bg-zinc-50 p-3.5 shadow-zinc-700/30 md:me-3"
     >
       <Toast v-if="error" id="search-error" level="error">
         <p class="text-md font-bold">{{ t("error.header") }}</p>
         <p class="text-sm">
           {{ t("error.reason") }}:<br />
           <code
-            class="text-red-900 bg-red-200 mb-1 mt-2 inline-flex max-w-full items-center space-x-2 overflow-auto rounded-md px-4 py-3 text-left font-mono text-xs dark:bg-red-50/20"
+            class="mt-2 mb-1 inline-flex max-w-full items-center space-x-2 overflow-auto rounded-md bg-red-200 px-4 py-3 text-left font-mono text-xs text-red-900 dark:bg-red-50/20"
           >
             {{ error }}
           </code>
@@ -170,8 +170,8 @@ const { data, error } = await useFetch<SearchResponse>(url, {
       </Toast>
       <ul v-for="s in data.sections" v-cloak :key="s.facet" class="flex flex-col gap-2">
         <div class="flex items-center">
-          <span class="text-md text-zinc-800 me-4 flex-shrink">{{ t(`sections.${s.facet}`) }}</span>
-          <div class="border-zinc-800 flex-grow border-t" />
+          <span class="text-md me-4 shrink text-zinc-800">{{ t(`sections.${s.facet}`) }}</span>
+          <div class="grow border-t border-zinc-800" />
         </div>
 
         <template v-for="(e, i) in s.entries" :key="e.id">
@@ -192,7 +192,7 @@ const { data, error } = await useFetch<SearchResponse>(url, {
           >
             {{ t("show_hidden", s.entries.length - s.n_visible) }}
           </Btn>
-          <span class="text-zinc-400 text-sm">
+          <span class="text-sm text-zinc-400">
             {{
               s.estimatedTotalHits > 20 ? t("approx_results", s.estimatedTotalHits) : t("results", s.estimatedTotalHits)
             }}

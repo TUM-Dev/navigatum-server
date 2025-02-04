@@ -10,7 +10,7 @@ const emit = defineEmits(["click", "mousedown", "mouseover"]);
 </script>
 
 <template>
-  <li class="bg-zinc-50 border-zinc-200 rounded-sm border hover:bg-blue-100">
+  <li class="rounded-xs border border-zinc-200 bg-zinc-50 hover:bg-blue-100">
     <NuxtLinkLocale
       :to="'/view/' + item.id"
       class="focusable"

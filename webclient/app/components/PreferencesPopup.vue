@@ -20,11 +20,11 @@ async function updateLocale(value: "de" | "en") {
     <div>
       <MenuButton
         id="preferences"
-        class="focusable relative flex rounded-full bg-transparent p-2 text-sm ring-2 ring-white ring-opacity-0 hover:bg-zinc-100/10 hover:ring-opacity-20 focus:outline-none focus:ring-opacity-100"
+        class="focusable ring-opacity-0 hover:ring-opacity-20 focus:ring-opacity-100 relative flex rounded-full bg-transparent p-2 text-sm ring-2 ring-white hover:bg-zinc-100/10 focus:outline-hidden"
       >
         <span class="absolute -inset-1.5" />
         <span class="sr-only">Open preferences menu</span>
-        <AdjustmentsHorizontalIcon class="text-zinc-900 h-6 w-6" />
+        <AdjustmentsHorizontalIcon class="h-6 w-6 text-zinc-900" />
       </MenuButton>
     </div>
     <Transition
@@ -33,12 +33,12 @@ async function updateLocale(value: "de" | "en") {
       leave-to-class="transform opacity-0 scale-95"
     >
       <MenuItems
-        class="ring-black bg-white absolute -right-1 top-20 z-10 w-48 origin-top-right rounded-sm py-5 shadow-lg ring-1 ring-opacity-5 dark:bg-zinc-100 focus:outline-none"
+        class="ring-opacity-5 absolute top-20 -right-1 z-10 w-48 origin-top-right rounded-xs bg-white py-5 ring-1 shadow-lg ring-black focus:outline-hidden dark:bg-zinc-100"
       >
-        <MenuItem as="div" class="text-zinc-400 block px-4 pb-2 text-xs font-semibold">
+        <MenuItem as="div" class="block px-4 pb-2 text-xs font-semibold text-zinc-400">
           {{ t("preferences") }}
         </MenuItem>
-        <MenuItem as="div" class="text-md text-zinc-500 block px-4 py-1 font-semibold">
+        <MenuItem as="div" class="text-md block px-4 py-1 font-semibold text-zinc-500">
           <SelectionSwitch v-model="colorMode.preference" label="Theme">
             <SelectionOption value="system">
               <ComputerDesktopIcon class="mt-0.5 h-4 w-4" />
@@ -54,7 +54,7 @@ async function updateLocale(value: "de" | "en") {
             </SelectionOption>
           </SelectionSwitch>
         </MenuItem>
-        <MenuItem as="div" class="text-md text-zinc-500 block px-4 py-1 font-semibold">
+        <MenuItem as="div" class="text-md block px-4 py-1 font-semibold text-zinc-500">
           <SelectionSwitch
             v-model="locale"
             :label="t('language')"

@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <svg
-    class="-ml-1 mr-2 animate-spin"
+    class="mr-2 -ml-1 animate-spin"
     :class="props.class"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
